@@ -1,0 +1,12 @@
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.DS_Store
+logs/
+wandb/
+lightning_logs/
+*.lmdb
+data/
+preprocessed_datasets/
