@@ -96,7 +96,7 @@ with tab1:
             st.pyplot(fig)
 
     else:
-        st.info("Paste an LMDB path to start (output of Yanic preprocessing).")
+        st.info("Paste an LMDB path to start.")
 
 # ===================== TAB 2: Fake sample =====================
 with tab2:
@@ -117,3 +117,18 @@ with tab2:
 
     st.write("Raw x:", x_raw.shape, "→ Ref x:", x_ref.shape)
     st.write("mask sum:", int(mask.sum()))
+
+    matched = [profile.channels[i] for i, v in enumerate(mask) if v]
+    missing = [profile.channels[i] for i, v in enumerate(mask) if not v]
+    coverage = float(mask.sum()) / float(len(profile.channels)) if len(profile.channels) else 0.0
+
+    colA, colB = st.columns(2)
+    with colA:
+        st.markdown("**Matched channels (present)**")
+        st.write(matched if matched else "None")
+
+    with colB:
+        st.markdown("**Missing channels (padded)**")
+        st.write(missing if missing else "None")
+
+    st.markdown(f"**Coverage:** {mask.sum()}/{len(profile.channels)} = {coverage*100:.1f}%")
